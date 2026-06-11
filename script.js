@@ -813,5 +813,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setLanguage(getLanguage() === "en" ? "kn" : "en");
   });
 
+   
+
   document.getElementById("dark-toggle")?.addEventListener("click", toggleTheme);
 });
