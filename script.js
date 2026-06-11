@@ -40,6 +40,12 @@ const TESTIMONIALS = [
 
 const WHATSAPP_NUMBER = "91XXXXXXXXXX";
 
+/* JV Construction office location on Google Maps */
+const GOOGLE_MAPS_EMBED_URL =
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3894.486524527182!2d77.42045327483379!3d12.550138387727827!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae59bd04a31625%3A0x72676ac503bb3222!2sJV%20CONSTRUCTIONS!5e0!3m2!1sen!2sin!4v1781191094066!5m2!1sen!2sin";
+const GOOGLE_MAPS_LINK =
+  "https://www.google.com/maps/place/JV+CONSTRUCTIONS/@12.5501384,77.4204533,17z";
+
 const translations = {
   en: {
     "page-title-home": "JV Construction — Building Homes. Creating Memories.",
@@ -159,8 +165,9 @@ const translations = {
     "contact-email-label": "Email",
     "contact-email": "info@jvconstruction.com",
     "contact-address-label": "Office Address",
-    "contact-address": "Your City, Karnataka, India",
-    "contact-map-placeholder": "Google Maps integration — replace with your embed code",
+    "contact-address": "JV Constructions, Bangalore, Karnataka, India",
+    "contact-map-title": "Find Us on the Map",
+    "contact-map-open": "Open in Google Maps",
     "form-name": "Name",
     "form-phone": "Phone Number",
     "form-email": "Email",
@@ -297,8 +304,9 @@ const translations = {
     "contact-email-label": "ಇಮೇಲ್",
     "contact-email": "info@jvconstruction.com",
     "contact-address-label": "ಕಚೇರಿ ವಿಳಾಸ",
-    "contact-address": "ನಿಮ್ಮ ನಗರ, ಕರ್ನಾಟಕ, ಭಾರತ",
-    "contact-map-placeholder": "ಗೂಗಲ್ ಮ್ಯಾಪ್ಸ್ ಏಕೀಕರಣ — ನಿಮ್ಮ ಎಂಬೆಡ್ ಕೋಡ್‌ನೊಂದಿಗೆ ಬದಲಾಯಿಸಿ",
+    "contact-address": "ಜೆವಿ ಕನ್ಸ್ಟ್ರಕ್ಷನ್ಸ್, ಬೆಂಗಳೂರು, ಕರ್ನಾಟಕ, ಭಾರತ",
+    "contact-map-title": "ನಕ್ಷೆಯಲ್ಲಿ ನಮ್ಮನ್ನು ಹುಡುಕಿ",
+    "contact-map-open": "ಗೂಗಲ್ ಮ್ಯಾಪ್ಸ್‌ನಲ್ಲಿ ತೆರೆಯಿರಿ",
     "form-name": "ಹೆಸರು",
     "form-phone": "ಫೋನ್ ಸಂಖ್ಯೆ",
     "form-email": "ಇಮೇಲ್",
@@ -743,6 +751,30 @@ function initContactForm() {
   });
 }
 
+/* --- Google Maps --- */
+function initGoogleMap() {
+  const container = document.getElementById("map-container");
+  if (!container || !GOOGLE_MAPS_EMBED_URL) return;
+
+  const mapTitle = t("contact-map-title");
+  container.innerHTML = `
+    <iframe
+      src="${GOOGLE_MAPS_EMBED_URL}"
+      allowfullscreen
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="${mapTitle} — JV Construction"
+    ></iframe>
+  `;
+
+  const mapsLink = document.getElementById("maps-link");
+  if (mapsLink) {
+    mapsLink.href = GOOGLE_MAPS_LINK;
+    mapsLink.target = "_blank";
+    mapsLink.rel = "noopener noreferrer";
+  }
+}
+
 /* --- WhatsApp Link --- */
 function initWhatsApp() {
   const btn = document.getElementById("whatsapp-float");
@@ -766,6 +798,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initHeroSlider();
   initStatsCounter();
   initContactForm();
+  initGoogleMap();
   initWhatsApp();
 
   const currentLang = getLanguage();
