@@ -751,28 +751,31 @@ function initContactForm() {
   });
 }
 
-/* --- Google Maps --- */
+/* --- Google Maps (link fallback if HTML iframe is missing) --- */
 function initGoogleMap() {
   const container = document.getElementById("map-container");
-  if (!container || !GOOGLE_MAPS_EMBED_URL) return;
-
-  const mapTitle = t("contact-map-title");
-  container.innerHTML = `
-    <iframe
-      src="${GOOGLE_MAPS_EMBED_URL}"
-      allowfullscreen
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-      title="${mapTitle} — JV Construction"
-    ></iframe>
-  `;
-
   const mapsLink = document.getElementById("maps-link");
-  if (mapsLink) {
+
+  if (mapsLink && GOOGLE_MAPS_LINK) {
     mapsLink.href = GOOGLE_MAPS_LINK;
     mapsLink.target = "_blank";
     mapsLink.rel = "noopener noreferrer";
   }
+
+  if (!container || container.querySelector("iframe") || !GOOGLE_MAPS_EMBED_URL) return;
+
+  container.innerHTML = `
+    <iframe
+      src="${GOOGLE_MAPS_EMBED_URL}"
+      width="100%"
+      height="100%"
+      style="border:0;"
+      allowfullscreen
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="${t("contact-map-title")} — JV Construction"
+    ></iframe>
+  `;
 }
 
 /* --- WhatsApp Link --- */
